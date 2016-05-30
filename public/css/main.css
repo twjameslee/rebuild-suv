@@ -1,0 +1,63 @@
+.title {
+    font-size: 34px;
+}
+
+.sub-title {
+    font-size: 13px;
+    margin-top: 22px;
+    margin-bottom: 50px;
+}
+
+td {
+    vertical-align: top;
+}
+
+.label {
+    height: 24px;
+    font-size: 20px
+}
+
+.input-div {
+    height: 40px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+input[type='text'],
+input:not([type]),
+textarea {
+    height: 24px;
+    width: 286px;
+    font-size: 16px;
+    border-width: 0;
+}
+
+input[type='checkbox'] {
+    font-size: 16px !important;
+}
+
+.chkbox-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.underline {
+    height: 1px;
+    width: 286px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+}
+
+.chkbox-item {
+    color: rgb(0, 122, 255);
+}
+
+#submit {
+    height: 36px;
+    width: 88px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 133, 244);
+    border-width: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}

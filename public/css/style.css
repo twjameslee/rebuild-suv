@@ -1,0 +1,38 @@
+/** Override Bootstrap */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #707070;
+}
+
+#data-table td {
+    height: 40px;
+}
+
+#data-table td.remark {
+    height: 80px;
+}
+
+.field-title {
+    width: 116px;
+    text-align: center;
+}
+
+.field-title.remark {
+    height: 180px;
+}
+
+.data-field {
+    color:#0000FF;
+}
+
+/* 一般有的沒的 */
+.hide_me {
+    display: none;
+}
+
+#score_form_error {
+    padding-left: 131px;
+}
