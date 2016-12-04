@@ -1,10 +1,19 @@
 <?php
+/**
+ * System messages translation for CodeIgniter(tm)
+ *
+ * @author	CodeIgniter community
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['ut_test_name'] = '測試名稱';
-$lang['ut_test_datatype'] = '測試類型';
-$lang['ut_res_datatype'] = '預期類型';
+$lang['ut_test_datatype'] = '測試的資料類型';
+$lang['ut_res_datatype'] = '期望的資料類型';
 $lang['ut_result'] = '結果';
-$lang['ut_undefined'] = '未定義測試名稱';
+$lang['ut_undefined'] = '未定義的測試名稱';
 $lang['ut_file'] = '檔案名稱';
 $lang['ut_line'] = '行數';
 $lang['ut_passed'] = '通過';
@@ -19,7 +28,3 @@ $lang['ut_object'] = '物件';
 $lang['ut_resource'] = '資源';
 $lang['ut_null'] = '無';
 $lang['ut_notes'] = '備註';
-
-
-/* End of file unit_test_lang.php */
-/* Location: ./system/language/zh-TW/unit_test_lang.php */

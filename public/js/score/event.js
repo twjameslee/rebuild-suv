@@ -32,6 +32,21 @@ var Event = function(Result) {
             }];
             Result.success(data);  // clear field
 
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(o) {
+
+                    if (o.result == 1)
+                        Result.success(o.data);
+                    else
+                        Result.error(o.error);
+                }
+            });
+
+            /*
             $.post(
                 $(this).attr('action'),
                 $(this).serialize(),
@@ -47,7 +62,7 @@ var Event = function(Result) {
                     }
                 },
             'json');
-
+            */
         });
 
     };

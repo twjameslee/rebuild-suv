@@ -1,63 +1,54 @@
 <div align="center">
 
-    <table style="border 0;border-collapse:collapse; border-spacing:0; width:750px; height:550px; background-image: url(<?php echo base_url()?>public/img/score/bg_105vspe_score.jpg)">
+    <div>
+        <span class='title'>重補修調查</span>
+        <span ></span>
+        <span id="profile_google"></span>
+    </div>
+
+    <div class="sub-title">105學年度第一梯次</div>
+
+    <table>
         <tr>
-            <td valign="top">
-                <div style="width:100%; padding:140px 240px 0 60px;">
-                    <table id="data-table" border="1" width="100%">
-                            <tr>
-                                <td class="field-title">身分證號</td>
-                                <td align="center">
-                                    <form id="score_form" class="form-inline" role="form" method="POST" action="<?php echo site_url('score/show')?>">
-                                        <input type="text" name="stu_id" class="form-control" style="width: 180px;" placeholder="請輸入你的身分證號碼"/>
-                                        <button type="submit" class="btn btn-default">查詢</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="field-title">學校名稱</td>
-                                <td align="center">
-                                    <span class="form-control-static data-field" id="jsch"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="field-title">姓名</td>
-                                <td align="center">
-                                    <span class="form-control-static data-field" id="stu_name"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="field-title">報考班別</td>
-                                <td align="center">
-                                    <span class="form-control-static data-field" id="exam_class"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="field-title">准考證號</td>
-                                <td align="center">
-                                    <span class="form-control-static data-field" id="exam_no"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="field-title">成績</td>
-                                <td align="center">
-                                    <p class="form-control-static data-field" id="score"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="field-title remark">備註</td>
-                                <td align="center">
-                                    <span class="form-control-static data-field" id="remark" style="text-align:left"></span>
-                                </td>
-                            </tr>
-                        </table>
-                    <div id="score_form_error" class="alert alert-danger hide_me" style="font-size: small;">
-                        <!-- Dynamic -->
+            <td>
+
+                <form id='Form1' method='post' target='_self'
+                      action='https://docs.google.com/forms/d/1__YDsukZmd3lzGoNNl4_4aGPZFdDPPHGYDM-n4LSKQk/formResponse'>
+
+                    <div class='label'>班級</div>
+                    <div class='input-div'>
+                        <input type='text' id='class' placeholder='您的回答'>
+                        <div class='underline'></div>
                     </div>
-                    <div style="color: #FF0000;font-size: small;text-align: center">
-                        ＊ 成績複查及後續事宜請至彰商特招網站(<a href="http://reg.chsc.tw/spec" target="_blank">http://reg.chsc.tw/spec</a>)查詢
+
+                    <div class='label'>座號</div>
+                    <div class='input-div'>
+                        <input type='text' id='seatNo' placeholder='您的回答'>
+                        <div class='underline'></div>
                     </div>
-                </div>
+
+                    <div class='label'>姓名</div>
+                    <div class='input-div'>
+                        <input type='text' id='stuName' placeholder='您的回答'>
+                        <div class='underline'></div>
+                    </div>
+
+                    <input type='hidden' id='UID'>
+                    <input type='hidden' id='subjs'>
+
+                    <div class="input-div">
+                        <input type='submit' id='submit' value='提交'>
+                    </div>
+                </form>
+
+            </td>
+            <td style="width:50px"></td>
+            <td>
+
+                <div class='label'>請選擇你要重補修的科目後按「提交」</div>
+                <div class='underline' style="width:340px"></div>
+                <div class='input-div' id='chkdiv'></div>
+
             </td>
         </tr>
     </table>

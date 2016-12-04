@@ -11,14 +11,11 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo base_url() ?>public/third-party/js/jquery.min.js"></script>
 <script src="<?php echo base_url() ?>public/third-party/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url() ?>public/js/score/result.js"></script>
-<script src="<?php echo base_url() ?>public/js/score/event.js"></script>
-<script src="<?php echo base_url() ?>public/js/score/template.js"></script>
-<script src="<?php echo base_url() ?>public/js/score.js"></script>
+<script src="<?php echo base_url() ?>public/js/suv/main.js"></script>
 <script>
     $(function() {
-        // Init the Score Application
-        var score = new Score();
+        // Init the SUV Application
+
     });
 </script>
 

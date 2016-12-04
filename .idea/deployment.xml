@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="rebuild-suv.james@nas">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="retake.james@chsc">
     <serverData>
-      <paths name="rebuild-suv.james@nas">
+      <paths name="retake.james@chsc">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />

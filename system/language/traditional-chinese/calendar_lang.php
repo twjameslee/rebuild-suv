@@ -1,4 +1,13 @@
 <?php
+/**
+ * System messages translation for CodeIgniter(tm)
+ *
+ * @author	CodeIgniter community
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['cal_su'] = '日';
 $lang['cal_mo'] = '一';
@@ -45,7 +54,3 @@ $lang['cal_september'] = '九月';
 $lang['cal_october'] = '十月';
 $lang['cal_november'] = '十一月';
 $lang['cal_december'] = '十二月';
-
-/* End of file calendar_lang.php */
-/* Location: ./system/language/zh-TW/calendar_lang.php */
-
