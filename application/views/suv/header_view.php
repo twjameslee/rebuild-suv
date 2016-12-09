@@ -14,10 +14,8 @@
 
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url() ?>public/css/style.css" rel="stylesheet" />
-
-    <link href='http://fonts.googleapis.com/css?family=Pompiere' rel='stylesheet' type='text/css'>
-    <!--<link href="css/zocial.css" rel="stylesheet" type="text/css">-->
-    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Pompiere' rel='stylesheet' type='text/css'> -->
+    <link href="<?php echo base_url() ?>public/css/main.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

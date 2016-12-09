@@ -1,35 +1,34 @@
 <div align="center">
 
     <div>
-        <span class='title'>重補修調查</span>
-        <span ></span>
-        <span id="profile_google"></span>
+        <div class='title'>重補修調查</div>
+        <div class="sub-title">105學年度第？梯次</div>
     </div>
-
-    <div class="sub-title">105學年度第一梯次</div>
-
-    <table>
+    <div id="signIn-div" style="margin-top: 150px">
+        <div id="signIn-btn"></div>
+    </div>
+    <div id="form-div" class="hide_me">
+        <table>
         <tr>
             <td>
 
-                <form id='Form1' method='post' target='_self'
-                      action='https://docs.google.com/forms/d/1__YDsukZmd3lzGoNNl4_4aGPZFdDPPHGYDM-n4LSKQk/formResponse'>
+                <form id='Form1' method='post' target='_self'>
 
                     <div class='label'>班級</div>
                     <div class='input-div'>
-                        <input type='text' id='class' placeholder='您的回答'>
+                        <input type='text' id='class'>
                         <div class='underline'></div>
                     </div>
 
                     <div class='label'>座號</div>
                     <div class='input-div'>
-                        <input type='text' id='seatNo' placeholder='您的回答'>
+                        <input type='text' id='seatNo'>
                         <div class='underline'></div>
                     </div>
 
                     <div class='label'>姓名</div>
                     <div class='input-div'>
-                        <input type='text' id='stuName' placeholder='您的回答'>
+                        <input type='text' id='stuName'>
                         <div class='underline'></div>
                     </div>
 
@@ -52,5 +51,5 @@
             </td>
         </tr>
     </table>
-
+    </div>
 </div>
