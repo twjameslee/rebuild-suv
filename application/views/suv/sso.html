@@ -1,0 +1,58 @@
+<html>
+<head>
+  <meta name="google-signin-client_id" content="91806396317-nnbu2id5vsr05mj10ta2frispkolcc3r.apps.googleusercontent.com">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id='signIn'>
+    <div id="signIn-btn"></div>
+    <div><div id="explain-img"></div></div>
+  </div>
+  <button id='signOut' onclick='signOut();' style="display:none">Sign out</button>
+  <script>
+    var user = {};
+    function onSuccess(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      
+      user.id = profile.getId();
+      user.id_token = googleUser.getAuthResponse().id_token;
+      user.name = profile.getName();
+      user.email = profile.getEmail();
+      user.photoUrl = profile.getImageUrl();
+      console.log('getId: ' + user.id);
+      console.log('id_token: ' + user.id_token);
+      console.log('Logged in as: ' + user.name);      
+      console.log('Email: ' + user.email);
+      console.log('photoUrl: ' + user.photoUrl);
+
+      document.getElementById('signIn').style.display = 'none';
+      document.getElementById('signOut').style.display = '';
+    }
+
+    function onFailure(error) {
+      console.log(error);
+    }
+
+    function renderButton() {
+      gapi.signin2.render('signIn-btn', {
+        scope: 'profile',
+        width: 240,
+        height: 50,
+        longtitle: true,
+        theme: 'dark',
+        onsuccess: onSuccess,
+        onfailure: onFailure
+      });
+    }
+
+    function signOut() {
+      gapi.auth2.getAuthInstance().signOut()
+      .then(function() {
+        document.getElementById('signIn').style.display = '';
+        document.getElementById('signOut').style.display = 'none';
+      });
+    }
+  </script>
+
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</body>
