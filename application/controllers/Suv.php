@@ -15,9 +15,7 @@ class Suv extends CI_Controller
 
     public function index()
     {
-        $this->load->view('suv/header_view');
         $this->load->view('suv/suv_view');
-        $this->load->view('suv/footer_view');
     }
 
     public function getStudent($stu_id = null)
