@@ -1,18 +1,115 @@
 /**
  * Created by James on 2016/5/7.
  */
-"use strict";
-
-var app = window.app = window.app || {};
-
 
 $(function() {
-    var _user = app.user = app.user || {
-            id:             '',
+
+    var data = {
+
+        //使用者資料
+        user: {
+            uid:            '',     // retake system user id
             name:           '',
-            email:          '',
+            class:          '',
+            seatno:         '',
+            email:          '尚未登入',
+            attend:         0,      //參加
+            gid:            '',     //google user id
+            gid_token:      '',
             thumbnailUrl:   ''
+        },
+
+        //辦理梯次
+        op_no: '????',
+
+        //本梯次需重補修科目
+        subjects: [],
+
+        //勾選的科目
+        selected_subj_id: [],
+
+        //不參加
+        chkOpt_out: false,
     };
+
+    var vm = new Vue({
+        el: '#vm',
+        data: data,
+
+        computed: {
+            userInfo: function() {
+              return this.user.class + ' ' + this.user.seatno + '號 ' + this.user.name;
+            },
+        },
+
+        methods: {
+            onSubmit: function (e) {
+
+                var subjects_WBU = [];
+                var IDs = this.selected_subj_id;
+
+                this.subjects.map( function(subj){
+
+                    if (IDs.indexOf(subj.id) > -1) {  //目前有勾選
+                        if (subj.selected !== 1)   //可是原來沒選，所以要更新
+                            subjects_WBU.push({ id: subj.id, selected: 1 });
+
+                    } else {                            //目前沒勾選
+                        if (subj.selected == 1)      //可是原來有選，也是要更新
+                            subjects_WBU.push({ id: subj.id, selected: 0 });
+
+                    }
+                });
+
+                //上傳選擇結果
+                $.ajax({
+
+                    type: "POST",
+                    url: base_url + 'index.php/suv/updSubjects',
+                    data: {
+                        stu_id: this.user.uid,
+                        attend: this.chkOpt_out ? 2 : 1,
+                        subjects_WBU: subjects_WBU
+                    },
+                    dataType: 'json',
+                    success: function (o) {
+
+                        if (o.result == 1) {
+                            showMessage('成功更新 ' + o.data + ' 筆選修科目');
+
+                        } else {
+                            showMessage(o.error);
+                        }
+
+                    }
+
+                });
+
+                //上傳成功後，進行「目前勾選的」與「從伺服器下載的」同步
+                this.subjects.map( function(subj){
+
+                    if (IDs.indexOf(subj.id) > -1)
+                        subj.selected = 1;
+                    else
+                        subj.selected = 0;
+
+                });
+
+            },
+
+            onAttendClick: function (e) {
+
+                vm.chkOpt_out = !vm.chkOpt_out;
+                if(vm.chkOpt_out) vm.selected_subj_id = [];
+
+            },
+
+            other_method: function() {
+
+            },
+        },
+
+    });
 
     function renderButton() {
         gapi.signin2.render('signIn-btn', {
@@ -21,112 +118,102 @@ $(function() {
             height: 40,
             longtitle: true,
             theme: 'dark',
-            onsuccess: onSuccess,
+            onsuccess: onLogin,     // pass googleUser Object
             onfailure: showError
         });
     }
 
-    function onSuccess(googleUser) {
+    function onLogin(gUser) {
+
+        getUserProfile(gUser);
+        getUserInfo();
+        getOpSubject();
+
+    }
+
+    function getUserProfile(googleUser) {
+
         var profile = googleUser.getBasicProfile();
 
-        _user.id = profile.getId();
-        //_user.id_token = googleUser.getAuthResponse().id_token;
-        _user.name = profile.getName();
-        _user.email = profile.getEmail();
-        _user.thumbnailUrl = profile.getImageUrl();
-        console.log('getId: ' + _user.id);
-        console.log('Logged in as: ' + _user.name);
-        console.log('Email: ' + _user.email);
-        console.log('photoUrl: ' + _user.thumbnailUrl);
-        $('#signIn-div').hide();
-        $('#form-div').removeClass('hide_me');
+        vm.user.gid_token = googleUser.getAuthResponse().id_token;
+        vm.user.gid = profile.getId();
+        vm.user.email = profile.getEmail();
+        vm.user.uid = vm.user.email.split('@')[0];
+        vm.user.thumbnailUrl = profile.getImageUrl();
 
-        next();
     }
 
-    function next() {
-        queryData();
-        querySubjects();
-    }
+    function getUserInfo() {
 
-    function onSubmit() {
-        var chk_val = $('#chkdiv input[name="subj"]:checkbox:checked').map(function () {
-            return $(this).val();
-        }).get().join(',');
-        $('#UID').attr('name', 'entry.1103021244').val(UID);
-        $('#class').attr('name', 'entry.1974649373');
-        $('#seatNo').attr('name', 'entry.755675225');
-        $('#stuName').attr('name', 'entry.111372776');
-        $('#subjs').attr('name', 'entry.2026888020').val(chk_val);
-    }
+        $.ajax({
 
-    function queryData() {
-        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1ZiL2PY1tgI8Zj4i356cVQjKG4PMdEcsSxZnihGtlXRI/gviz/tq?headers=1&sheet=個資');
-        query.setQuery("select B,C,D where A='" + UID + "'"); // '9036219166'
+            type: "POST",
+            url: base_url + 'index.php/suv/getOpStudent',
+            data: { stu_id: vm.user.uid },
+            dataType: 'json',
 
-        query.send(function (response) {
-            if (response.isError()) {
-                showError('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage() + ' ' + response.getReasons());
-                return;
+            success: function(o) {
+
+                if (o.result == 1) {
+                    var u = o.data[0];
+                    vm.user.name = u.sname;
+                    vm.user.class = u.class;
+                    vm.user.seatno = u.seatno;
+                    vm.chkOpt_out = (u.attend==2);
+                    vm.op_no = u.op_no;
+
+                } else {
+                    //Result.error(o.error);
+                    showMessage("你不是本梯次需要重修的學生，有問題請洽實研組!!");
+
+                }
+
             }
-            var data = response.getDataTable();
-            var rows = data.getNumberOfRows();
-            if (rows !== 1) {
-                showError('Error in query: UID or Google Spreadsheet Data Error');
-                return;
-            }
-            $('#class').val(data.getValue(0, 0)).attr("readonly", "readonly");
-            $('#seatNo').val(data.getValue(0, 1)).attr("readonly", "readonly");
-            $('#stuName').val(data.getValue(0, 2)).attr("readonly", "readonly");
+
         });
+
     }
 
-    function querySubjects() {
-        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1ZiL2PY1tgI8Zj4i356cVQjKG4PMdEcsSxZnihGtlXRI/gviz/tq?headers=1&sheet=多選1');
-        query.setQuery("select B where A='" + UID + "'"); // '9036219166'
+    function getOpSubject() {
 
-        query.send(function (response) {
-            if (response.isError()) {
-                showError('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage() + ' ' + response.getReasons());
-                return;
-            }
-
-            var $chk = $('<div class="chkbox-item"><input type="checkbox" name="subj" value="都不選">都不選</div>');
-            var $chkdiv = $('#chkdiv');
-            $chkdiv.append($chk);
-
-            var data = response.getDataTable();
-            var rows = data.getNumberOfRows();
-            for (var row = 0; row < rows; row++) {
-                var val = data.getValue(row, 0);
-                var $chk = $('<div class="chkbox-item"><input type="checkbox" name="subj" value="' + val + '">' + val + '</div>');
-                $chkdiv.append($chk);
+        $.ajax({
+            type: "POST",
+            url: base_url + 'index.php/suv/getOpSubject',
+            data: {stu_id: vm.user.uid},
+            dataType: 'json',
+            success: function(o) {
+                if (o.result == 1) {
+                    vm.subjects = o.data;
+                    var IDs = [];
+                    vm.subjects.map(function(subj) {
+                        if (subj.selected == 1) IDs.push(subj.id);
+                    });
+                    vm.selected_subj_id = IDs;
+                } else
+                    showError("從伺服器讀取您的需重補修科目發生問題!!\n" + o.error);
             }
         });
+
     }
 
     function showError(error) {
+
         console.log(error);
-        window.alert('哦哦…發生錯誤了，請再試一次看看！\n' + error);
+        alert('哦哦…發生錯誤了：\n' + error);
+
     }
 
+    function showMessage(msg) {
 
-// -------------------------------------------------------------------------
+        alert(msg);
+
+    }
+
+    // ------------------------------------------------------------
+
+    //user.uid = $.getUrlVar('UID');
+    //data.opName = $.getUrlVar('opName');
 
     renderButton();
-
-    app.UID = $.getUrlVar('UID');
-    app.sub_title = $.getUrlVar('stitle');
-
-    // if (!app.UID) {
-    //     $('#submit').attr("disabled", "disabled");
-    //     return;
-    // }
-    if (app.sub_title) $('.sub-title').html(app.sub_title);
-    //
-    // $('#Form1').submit(function () {
-    //     onSubmit();
-    //     return false;
-    // });
 
 });

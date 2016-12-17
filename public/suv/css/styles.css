@@ -17,13 +17,13 @@ input[type='checkbox'] {
 }
 
 .checkbox, .radio {
-  margin-top:5px;
-  margin-bottom:5px;
+  margin-top:4px;
+  margin-bottom:4px;
 }
 
 div.subj-list {
   overflow:auto;
-  height:320px;
+  height:315px;
   background-color:rgba(0,0,0,0.05);
 }
 
@@ -32,8 +32,21 @@ i.glyphicon.glyphicon-knight {
 }
 
 .footer-dark {
-  padding:25px 0 40px;
+  padding:20px 0 20px;
   color:#f0f9ff;
   background-color:#282d32;
+}
+
+#ct {
+  margin-top:100px;
+}
+
+#user-profile {
+  color:#d9d9d9;
+}
+
+#submit {
+  margin-top:40px;
+  text-align:center;
 }
 
